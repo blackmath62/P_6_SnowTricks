@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snow Tricks{% endblock %}
+
+{% block body %}
+<div class="d-flex">
+{% for figure in figures %}
+<div class="jumbotron col-4 m-2">
+  <h1 class="display-3">{{ figure.title}}</h1>
+  <p class="lead">{{figure.content}}</p>
+  <hr class="my-4">
+  <p>catégorie : {{figure.category}}  Article créé le {{figure.createdAt | date("d/m/Y")}} par {{figure.users}}</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="" role="button">Lire plus !</a>
+  </p>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+
