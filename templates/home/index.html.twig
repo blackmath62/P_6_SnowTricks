@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Snow Tricks{% endblock %}
-
-{% block body %}
-<div class="d-flex">
-{% for figure in figures %}
-<div class="jumbotron col-4 m-2">
-  <h1 class="display-3">{{ figure.title}}</h1>
-  <p class="lead">{{figure.content}}</p>
-  <hr class="my-4">
-  <p>catégorie : {{figure.category}}  Article créé le {{figure.createdAt | date("d/m/Y")}} par {{figure.users}}</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="" role="button">Lire plus !</a>
-  </p>
-</div>
-{% endfor %}
-</div>
+{% block title %}Snow Tricks
 {% endblock %}
 
+{% block body %}
+	<!-- Portfolio -->
+	<section class="content-section" id="tricks">
+		<div class="container-fluid  ">
+			<div class="d-flex flex-wrap justify-content-around no-gutters ">
+				{% for figure in figures %}
+					<div class="card m-3 p-0 col-lg-2 col-auto">
+						<a class="portfolio-item" href="#!">
+							<img class="img-fluid" src="img/portfolio-1.jpg" alt="Card image">
+							<div class="card-body d-flex">
+								<h5 class="card-title mr-auto mx-auto p-1 text-primary">{{figure.title}}</h5>
+								<div class="ml-auto">
+									<a href="" class="fa fa-edit fa-lg p-1 text-primary"></a>
+									<a href="" class="fa fa-trash fa-lg p-1 text-primary"></a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
