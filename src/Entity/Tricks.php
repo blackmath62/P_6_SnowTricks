@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\FiguresRepository;
+use App\Repository\TricksRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FiguresRepository::class)
+ * @ORM\Entity(repositoryClass=TricksRepository::class)
  */
-class Figures
+class Tricks
 {
     /**
      * @ORM\Id()
@@ -35,12 +35,12 @@ class Figures
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="figure")
+     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="trick")
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity=Movies::class, mappedBy="figure", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Movies::class, mappedBy="trick", orphanRemoval=true)
      */
     private $movies;
 
@@ -55,7 +55,7 @@ class Figures
     private $Users;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="figure", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="trick", orphanRemoval=true)
      */
     private $comments;
 
@@ -125,7 +125,7 @@ class Figures
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
-            $picture->setFigure($this);
+            $picture->setTrick($this);
         }
 
         return $this;
@@ -136,8 +136,8 @@ class Figures
         if ($this->pictures->contains($picture)) {
             $this->pictures->removeElement($picture);
             // set the owning side to null (unless already changed)
-            if ($picture->getFigure() === $this) {
-                $picture->setFigure(null);
+            if ($picture->getTrick() === $this) {
+                $picture->setTrick(null);
             }
         }
 
@@ -156,7 +156,7 @@ class Figures
     {
         if (!$this->movies->contains($movie)) {
             $this->movies[] = $movie;
-            $movie->setFigure($this);
+            $movie->setTrick($this);
         }
 
         return $this;
@@ -167,8 +167,8 @@ class Figures
         if ($this->movies->contains($movie)) {
             $this->movies->removeElement($movie);
             // set the owning side to null (unless already changed)
-            if ($movie->getFigure() === $this) {
-                $movie->setFigure(null);
+            if ($movie->getTrick() === $this) {
+                $movie->setTrick(null);
             }
         }
 
@@ -230,7 +230,7 @@ class Figures
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setFigure($this);
+            $comment->setTrick($this);
         }
 
         return $this;
@@ -241,8 +241,8 @@ class Figures
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getFigure() === $this) {
-                $comment->setFigure(null);
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
             }
         }
 

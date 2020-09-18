@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Figures;
-use App\Repository\FiguresRepository;
+use App\Entity\Tricks;
+use App\Repository\TricksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,12 +15,12 @@ class HomeController extends AbstractController
      *@Route("/", name="home")
      */
 
-    public function index(FiguresRepository $repo)
+    public function index(TricksRepository $repo)
     {
-        $figures =$repo->findAll();
+        $Tricks =$repo->findAll();
 
         return $this->render('home/index.html.twig', [
-            'figures' => $figures
+            'Tricks' => $Tricks
         ]);
     }
 
@@ -30,9 +30,9 @@ class HomeController extends AbstractController
 
     public function create(Request $request, EntityManagerInterface $manager)
     {
-        $figure = new Figures();
+        $Trick = new Tricks();
 
-        $form = $this->createFormBuilder($figure)
+        $form = $this->createFormBuilder($Trick)
                      ->add('title')
                      ->add('content')
                      ->add('users')
@@ -41,13 +41,13 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $figure->setCreatedAt(new \DateTime());
-            $manager->persist($figure);
+            $Trick->setCreatedAt(new \DateTime());
+            $manager->persist($Trick);
             $manager->flush();
         }
 
         return $this->render('home/create.html.twig', [
-            'formFigure' => $form->createView()
+            'formTrick' => $form->createView()
         ]);
     }
 }

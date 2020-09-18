@@ -28,10 +28,10 @@ class Movies
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Figures::class, inversedBy="movies")
+     * @ORM\ManyToOne(targetEntity=Tricks::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $figure;
+    private $Trick;
 
     public function getId(): ?int
     {
@@ -62,14 +62,14 @@ class Movies
         return $this;
     }
 
-    public function getFigure(): ?Figures
+    public function getTrick(): ?Tricks
     {
-        return $this->figure;
+        return $this->Trick;
     }
 
-    public function setFigure(?Figures $figure): self
+    public function setTrick(?Tricks $Trick): self
     {
-        $this->figure = $figure;
+        $this->Trick = $Trick;
 
         return $this;
     }
