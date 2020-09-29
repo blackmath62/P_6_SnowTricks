@@ -45,24 +45,20 @@ class Tricks
     private $movies;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $commentId;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Users;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="trick", orphanRemoval=true)
      */
     private $comments;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="tricks")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -70,6 +66,7 @@ class Tricks
         $this->movies = new ArrayCollection();
         $this->commentId = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,49 +175,6 @@ class Tricks
     /**
      * @return Collection|Comments[]
      */
-    public function getCommentId(): Collection
-    {
-        return $this->commentId;
-    }
-
-    public function addCommentId(Comments $commentId): self
-    {
-        if (!$this->commentId->contains($commentId)) {
-            $this->commentId[] = $commentId;
-            $commentId->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentId(Comments $commentId): self
-    {
-        if ($this->commentId->contains($commentId)) {
-            $this->commentId->removeElement($commentId);
-            // set the owning side to null (unless already changed)
-            if ($commentId->getUser() === $this) {
-                $commentId->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getUsers(): ?string
-    {
-        return $this->Users;
-    }
-
-    public function setUsers(string $Users): self
-    {
-        $this->Users = $Users;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Comments[]
-     */
     public function getComments(): Collection
     {
         return $this->comments;
@@ -249,14 +203,26 @@ class Tricks
         return $this;
     }
 
-    public function getCategory(): ?int
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(int $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

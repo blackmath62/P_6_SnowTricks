@@ -18,12 +18,6 @@ class Comments
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tricks::class, inversedBy="commentId")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
@@ -44,21 +38,15 @@ class Comments
      */
     private $Trick;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?Tricks
-    {
-        return $this->user;
-    }
-
-    public function setUser(?Tricks $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getPicture(): ?string
@@ -105,6 +93,18 @@ class Comments
     public function setTrick(?Tricks $Trick): self
     {
         $this->Trick = $Trick;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

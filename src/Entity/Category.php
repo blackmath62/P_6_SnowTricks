@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,26 +22,36 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $label;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tricks::class, mappedBy="category", orphanRemoval=true)
+     */
+    private $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getLabel(): ?string
     {
-        return $this->title;
+        return $this->label;
     }
 
-    public function setTitle(string $title): self
+    public function setLabel(string $label): self
     {
-        $this->title = $title;
+        $this->label = $label;
 
         return $this;
     }
@@ -52,6 +64,37 @@ class Category
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tricks[]
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Tricks $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Tricks $trick): self
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            // set the owning side to null (unless already changed)
+            if ($trick->getCategory() === $this) {
+                $trick->setCategory(null);
+            }
+        }
 
         return $this;
     }
